@@ -1,0 +1,13 @@
+{
+  "name": "jkp/simple-mvc-app",
+  "description": "Simple PHP MVC app with auth, form submission and reporting",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^8.0"
+  }
+}
