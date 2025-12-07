@@ -1,94 +1,110 @@
-# Simple PHP MVC App
+Simple MVC App (PHP, MySQL, Docker)
+A simple web application built with pure PHP (no frameworks), following MVC architecture, OOP principles, PSR-1, and PSR-4 autoloading.
+The project includes authentication, AJAX-based form submission, validation, reporting, and is fully containerized with Docker.
 
-A simple web application using **pure PHP** (no frameworks) following:
+---
 
-- MVC architecture
-- OOP principles
-- PSR-4 autoloading (Composer)
-- PSR-1 naming conventions
+Tech Stack
+• PHP 8+ (OOP + MVC)
+• MySQL 8
+• Composer (PSR-4 autoloading)
+• Vanilla JavaScript (AJAX + validation)
+• HTML / CSS (light & dark theme)
+• Docker & Docker Compose
 
-Features:
+---
 
-- User authentication (signup, login, logout)
-- Validated data submission form (frontend JS + backend PHP)
-- Reporting page with date range and user ID filtering
-- Dockerized (PHP-Apache + MySQL)
+Features
+Authentication
+• Signup (name, email, password)
+• Login (email + password, hashed)
+• Logout (session-based)
+• Protected pages (requires login)
+Data Submission
+• AJAX form submission
+• Frontend + backend validation
+• Prevent multiple submissions (24h cookie)
+• Automatic fields:
+o buyer IP
+o submission date
+o hash key (sha-512)
+Reports
+• View all submissions
+• Filter by date range or user ID
+• Edit & delete entries
+• Clean, modern UI with theme toggle
 
-## Requirements
+---
 
-- PHP 8+
-- Composer
-- Docker & Docker Compose (if running via containers)
+Project Structure
+src/
+├── Controllers/
+├── Models/
+├── Views/
+├── Core/ (Database + Validator)
+public/
+├── index.php
+├── css/
+└── js/
+config/
+database.sql
+Dockerfile
+docker-compose.yml
+composer.json
 
-## Installation
+---
 
-1. Extract this project.
+Running the Project (Docker)
 
-2. Install Composer dependencies:
+1. Clone the repo
+   git clone https://github.com/Jkp-jakaria/Simple-MVC-App.git
+   cd Simple-MVC-App
+2. Start using Docker Compose
+   docker-compose up --build
+   • App: http://localhost:8080
+   • MySQL auto-loads database.sql with schema + sample data
 
-   ```bash
-   composer install
-   ```
+---
 
-3. Configure environment:
+Run Using Prebuilt Docker Image (No Setup)
+docker run -p 8080:80 jkp016/simple-mvc-app:1.1
+Open:
+http://localhost:8080
 
-   - Edit `config/config.php` if needed (DB host, credentials, base URL, salt).
+---
 
-4. Database:
+Sample User (for testing)
+Email: jkp.jakaria@gmail.com
+Password: 123456
+Or register a new account using Signup.
 
-   - The schema is defined in `database.sql`.
-   - For Docker, it will be imported automatically.
-   - For local MySQL, run:
+---
 
-     ```bash
-     mysql -u root -p < database.sql
-     ```
+Validation Summary
+• Amount: numbers only
+• Buyer: letters, numbers, spaces (max 20 chars)
+• Receipt ID: text
+• Items: multiple items, text
+• Email: valid format
+• Note: max 30 words
+• City: letters + spaces only
+• Phone: numbers (auto prepends 880)
+• Entry By: numbers only
 
-## Running with Docker
+---
 
-```bash
-docker-compose up --build
-```
+About the Code
+• Routing is handled by public/index.php (simple GET-based router)
+• Controllers manage request handling
+• Models interact with the database via PDO
+• Views render templates via a shared layout
+• Autoloading is handled through Composer (PSR-4)
+• Dockerfile builds the app using php:8.x-apache
+• docker-compose runs app + MySQL linked together
 
-- App URL: `http://localhost:8080`
-- MySQL: host `mysql`, db `simple_app`, user `root`, password `rootpassword`.
+---
 
-## Running locally (without Docker)
-
-1. Create the database and tables:
-
-   ```bash
-   mysql -u root -p < database.sql
-   ```
-
-2. Update `config/config.php` with your local DB host/user/password.
-
-3. Start PHP's built-in server from project root:
-
-   ```bash
-   php -S localhost:8080 -t public
-   ```
-
-4. Open `http://localhost:8080` in your browser.
-
-## Usage
-
-1. Visit `/` (login page).
-2. Signup a new user.
-3. Login with your credentials.
-4. Go to “Submit Data” to submit a form:
-   - Frontend JS validates according to assignment rules.
-   - Submission is sent via AJAX to `?route=submission/store`.
-   - Cookie prevents multiple submissions within 24 hours.
-
-5. Report Page:
-   - Go to “Report” from navigation.
-   - Filter by date range and/or user ID.
-
-## Notes
-
-- Passwords are hashed using `password_hash`.
-- Sessions keep user logged in.
-- Routes are managed with `?route=...` in `public/index.php`.
-- Hash key for each submission: `sha-512` of `receipt_id` + salt.
-- Buyer IP comes from `$_SERVER['REMOTE_ADDR']`.
+Author
+Jakaria Kabir Provati
+• GitHub: https://github.com/Jkp-jakaria/Simple-MVC-App.git
+• Docker Hub: https://hub.docker.com/r/jkp016/simple-mvc-app
