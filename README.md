@@ -105,6 +105,6 @@ About the Code
 ---
 
 Author
-Jakaria Kabir Provati
+Jakaria Kabir Provat
 • GitHub: https://github.com/Jkp-jakaria/Simple-MVC-App.git
 • Docker Hub: https://hub.docker.com/r/jkp016/simple-mvc-app
